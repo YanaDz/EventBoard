@@ -2,18 +2,29 @@ spring:
   application:
     name: eventlistener
   datasource:
-    url: jdbc:oracle:thin:@localhost:1521/${ORACLE_PDB:event_database}
-    username: ${APP_USER:admin}
-    password: ${APP_USER_PASSWORD:admin}
+    url: jdbc:oracle:thin:@//${ORACLE_URL}:${ORACLE_PORT}/${ORACLE_PDB}
+    username: ${APP_USER}
+    password: ${APP_USER_PASSWORD}
     driver-class-name: oracle.jdbc.OracleDriver
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 5
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.OracleDialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
 
 flyway:
   enabled: true
-  url: jdbc:oracle:thin:@localhost:1521/${ORACLE_PDB:event_database}
-  user: ${APP_USER:admin}
-  password: ${APP_USER_PASSWORD:admin}
+  url: jdbc:oracle:thin:@//${ORACLE_URL}:${ORACLE_PORT}/${ORACLE_PDB}
+  user: ${APP_USER}
+  password: ${APP_USER_PASSWORD}
   driver-class-name: oracle.jdbc.OracleDriver
+  locations: classpath:db/migration
+  baseline-on-migrate: true
