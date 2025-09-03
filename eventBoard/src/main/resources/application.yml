@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: event.board
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${POSTGRES_DB:event_board_db}
+    username: ${POSTGRES_USER:admin}
+    password: ${POSTGRES_PASSWORD:admin}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+
+flyway:
+  enabled: true
+  driver-class-name: org.postgresql.Driver
+  url: jdbc:postgresql://localhost:5432/${POSTGRES_DB:event_board_db}
+  user: ${POSTGRES_USER:admin}
+  password: ${POSTGRES_PASSWORD:admin}

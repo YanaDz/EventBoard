@@ -1,0 +1,44 @@
+.env
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Gradle
+.gradle/
+**/.gradle/
+
+# Build output
+build/
+**/build/
+out/
+**/out/
+bin/
+**/bin/
+
+# Logs
+logs/
+**/logs/
+*.log
+*.tmp
+tmp/
+**/tmp/
+
+# Spring Boot
+*.pid
+*.seed
+
+# Docker
+.docker/
+docker-data/
+
+# IntelliJ HTTP Client
+.idea/httpRequests/
+

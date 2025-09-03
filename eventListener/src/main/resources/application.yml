@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: eventlistener
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521/${ORACLE_PDB:event_database}
+    username: ${APP_USER:admin}
+    password: ${APP_USER_PASSWORD:admin}
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+
+flyway:
+  enabled: true
+  url: jdbc:oracle:thin:@localhost:1521/${ORACLE_PDB:event_database}
+  user: ${APP_USER:admin}
+  password: ${APP_USER_PASSWORD:admin}
+  driver-class-name: oracle.jdbc.OracleDriver
