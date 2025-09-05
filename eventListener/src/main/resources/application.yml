@@ -2,29 +2,18 @@ spring:
   application:
     name: eventlistener
   datasource:
-    url: jdbc:oracle:thin:@//${ORACLE_URL}:${ORACLE_PORT}/${ORACLE_PDB}
-    username: ${APP_USER}
-    password: ${APP_USER_PASSWORD}
-    driver-class-name: oracle.jdbc.OracleDriver
-    hikari:
-      connection-timeout: 30000
-      maximum-pool-size: 5
+    url: jdbc:postgresql://${POSTGRES_URL}:${POSTGRES_PORT}/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: validate
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.OracleDialect
-        jdbc:
-          lob:
-            non_contextual_creation: true
+      ddl-auto: none
 
 flyway:
   enabled: true
-  url: jdbc:oracle:thin:@//${ORACLE_URL}:${ORACLE_PORT}/${ORACLE_PDB}
-  user: ${APP_USER}
-  password: ${APP_USER_PASSWORD}
-  driver-class-name: oracle.jdbc.OracleDriver
-  locations: classpath:db/migration
-  baseline-on-migrate: true
+  driver-class-name: org.postgresql.Driver
+  url: jdbc:postgresql://${POSTGRES_URL}:${POSTGRES_PORT}/${POSTGRES_DB}
+  username: ${POSTGRES_USER}
+  password: ${POSTGRES_PASSWORD}

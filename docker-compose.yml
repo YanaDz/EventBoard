@@ -1,39 +1,36 @@
 services:
-  oracle:
-    image: gvenzl/oracle-xe:21-slim
-    container_name: oracle-event-db
-    environment:
-      - ORACLE_PASSWORD=${ORACLE_PASSWORD}
-      - APP_USER=${APP_USER}
-      - APP_USER_PASSWORD=${APP_USER_PASSWORD}
-      - ORACLE_PDB=${ORACLE_PDB}
-      - ORACLE_ALLOW_REMOTE=true
-    ports:
-      - "1521:1521"
-      - "5500:5500"
-    volumes:
-      - oracle-data:/opt/oracle/oradata
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "echo 'select 1 from dual;' | sqlplus -s ${APP_USER}/${APP_USER_PASSWORD}@localhost:1521/${ORACLE_PDB} || exit 1"]
-      interval: 15s
-      timeout: 5s
-      retries: 20
-
-  postgres:
+  postgres_event_listener:
     image: postgres:16-alpine
-    container_name: postgres-event-db
+    container_name: event_listener_db
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=event_listener_db
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
     ports:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  postgres_event_board:
+    image: postgres:16-alpine
+    container_name: event_board_db
+    environment:
+      - POSTGRES_DB=${POSTGRES_BOARD_DB}
+      - POSTGRES_USER=${POSTGRES_BOARD_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_BOARD_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
       retries: 10
