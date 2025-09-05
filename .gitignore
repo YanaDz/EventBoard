@@ -1,4 +1,5 @@
 .env
+/.env
 
 # IDE files
 .idea/
@@ -6,6 +7,12 @@
 *.ipr
 *.iws
 .vscode/
+
+**/.idea/
+**/*.iml
+**/*.ipr
+**/*.iws
+**/.vscode/
 
 # OS files
 .DS_Store
